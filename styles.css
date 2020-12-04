@@ -1,4 +1,113 @@
+body {
+  background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+}
+
+footer {
+  font-family: monospace;
+  margin: 20px 0;
+}
+
 h1 {
+  font-family: Amatic SC, cursive;
   text-align: center;
-  color: blue;
+  margin: 80px 0 40px 0;
+  font-weight: 200px;
+  font-size: 60px;
+}
+
+h1,
+h2,
+.card-title,
+.day {
+  font-family: Amatic SC, cursive;
+}
+
+h2 {
+  margin: 30px 0;
+  font-size: 40px;
+  text-align: center;
+}
+
+img.header-image {
+  display: block;
+  margin: 0 auto;
+}
+
+label,
+.col-6,
+.btn {
+  font-family: "Roboto", cursive;
+  font-size: 25px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.btn {
+  font-size: 15px;
+}
+
+.btn-success {
+  margin-bottom: 15px;
+}
+
+.card {
+  margin: 10px;
+  background-color: #f1f6f9;
+}
+
+.card-title {
+  text-align: center;
+  font-size: 40px;
+  padding: 25px;
+}
+
+.col-4 {
+  line-height: 2;
+}
+
+.current-temperature {
+  font-size: 60px;
+  font-weight: 500px;
+  margin-left: 0;
+}
+
+.day {
+  font-size: 40px;
+}
+
+.default {
+  text-transform: capitalize;
+}
+
+.logo {
+  font-size: 40px;
+}
+
+.search {
+  width: 30%;
+}
+
+.sunrise {
+  font-size: 12px;
+}
+
+.sun-logo {
+  color: #ffe05d;
+  font-size: 110px;
+  padding-left: 60px;
+}
+
+.temp {
+  font-family: monospace;
+  font-size: 25px;
+  font-weight: lighter;
+}
+
+.temp-measure {
+  font-size: 18px;
+  vertical-align: text-top;
+}
+
+.temp-measure:hover {
+  cursor: pointer;
 }
