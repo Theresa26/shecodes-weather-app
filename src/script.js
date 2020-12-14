@@ -1,5 +1,4 @@
 // update the last updated time on weather app
-
 function formatDate(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
@@ -27,7 +26,6 @@ function formatDate(timestamp) {
 }
 
 // update the sunrise time
-
 function showSunrise(time) {
   let sunriseDate = new Date(time);
   let sunriseHours = sunriseDate.getHours();
@@ -54,6 +52,13 @@ function showSunset(time) {
 
 // fetch city that was updated in the search engine and update elements using the open weather API
 
+function search(city) {
+  let apiKey = "095c860579f22b3bd8962f914fb1341a";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
+
+  axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemp);
+}
+
 function displayCity(event) {
   event.preventDefault();
   let searchCity = document.querySelector("#searchCity");
@@ -63,15 +68,13 @@ function displayCity(event) {
     defaultCity[i].innerHTML = searchCity.value;
   }
 
-  var city = document.getElementById("searchCity").value;
-  let apiKey = "095c860579f22b3bd8962f914fb1341a";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
-
-  axios.get(`${apiUrl}&appid=${apiKey}`).then(showTemp);
+  search(document.getElementById("searchCity").value);
 }
 
 let form = document.querySelector("form");
 form.addEventListener("submit", displayCity);
+
+search("London");
 
 // pull the acutal weather for the location that is being entered
 
@@ -117,7 +120,7 @@ function showTemp(response) {
   let displaySunset = document.querySelector("#sunset");
   displaySunset.innerHTML = showSunset(response.data.sys.sunset * 1000);
 
-  //update the icon on the weather app based on current weather
+  //update the icon and alternative description on the weather app based on current weather
   let weatherCode = response.data.weather[0].icon;
   let icon = document.querySelector("#icon");
   icon.setAttribute(

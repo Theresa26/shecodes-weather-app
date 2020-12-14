@@ -46,10 +46,6 @@ label,
   font-size: 15px;
 }
 
-.btn-success {
-  margin-bottom: 15px;
-}
-
 .card {
   margin: 10px;
   background-color: #f1f6f9;
@@ -79,21 +75,21 @@ label,
   text-transform: capitalize;
 }
 
+.icon {
+  font-size: 150px;
+  padding-left: 40px;
+}
+
 .logo {
   font-size: 40px;
 }
 
 .search {
-  width: 30%;
+  width: 100%;
 }
 
 .sunrise {
   font-size: 12px;
-}
-
-.icon {
-  font-size: 150px;
-  padding-left: 40px;
 }
 
 .temp {
