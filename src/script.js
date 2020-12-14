@@ -1,31 +1,30 @@
 // set the current time on the weather app
 
-let currentTime = new Date();
-let day = currentTime.getDay();
+function formatDate(timestamp) {
+  let date = new Date(timestamp);
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
 
-let weekdays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+  let weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
-let actualDay = weekdays[day];
-let hours = currentTime.getHours();
-if (hours < 10) {
-  hours = `0${hours}`;
+  let actualDay = weekdays[date.getDay()];
+  return `${actualDay} ${hours}:${minutes}`;
 }
-let minutes = currentTime.getMinutes();
-if (minutes < 10) {
-  minutes = `0${minutes}`;
-}
-let fullTimeShown = `${actualDay} ${hours}:${minutes}`;
-let time = document.getElementById("day-time");
-time.innerHTML = fullTimeShown;
 
 // make sure that the city that is being searched for is being displayed
 // double check why it works now for the querselector but not queryselectorAll
@@ -98,10 +97,13 @@ function showTemp(response) {
   displayHumidity.innerHTML = humidity;
 
   let displayWindSpeed = document.querySelector("#speed");
-  displayWindSpeed.innerHTML = windSpeed;
+  displayWindSpeed.innerHTML = Math.round(windSpeed);
 
   let displayDescription = document.querySelector("#description");
   displayDescription.innerHTML = weatherDes;
+
+  let date = document.querySelector("#day-time");
+  date.innerHTML = formatDate(response.data.dt * 1000);
 
   let displaySunrise = document.querySelector("#sunrise");
   displaySunrise.innerHTML = sunriseTime;

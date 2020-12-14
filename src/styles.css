@@ -104,8 +104,9 @@ label,
 }
 
 .temp-measure {
+  position: relative;
   font-size: 18px;
-  vertical-align: text-top;
+  top: -30px;
 }
 
 .temp-measure:hover {
