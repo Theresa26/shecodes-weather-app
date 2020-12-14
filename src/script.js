@@ -1,4 +1,4 @@
-// set the current time on the weather app
+// update the last updated time on weather app
 
 function formatDate(timestamp) {
   let date = new Date(timestamp);
@@ -26,8 +26,33 @@ function formatDate(timestamp) {
   return `${actualDay} ${hours}:${minutes}`;
 }
 
-// make sure that the city that is being searched for is being displayed
-// double check why it works now for the querselector but not queryselectorAll
+// update the sunrise time
+
+function showSunrise(time) {
+  let sunriseDate = new Date(time);
+  let sunriseHours = sunriseDate.getHours();
+  if (sunriseHours < 10) {
+    sunriseHours = `0${sunriseHours}`;
+  }
+  let sunriseMinutes = sunriseDate.getMinutes();
+  if (sunriseMinutes < 10) {
+    sunriseMinutes = `0${sunriseMinutes}`;
+  }
+  return `${sunriseHours}:${sunriseMinutes}`;
+}
+
+// update the sunset time
+function showSunset(time) {
+  let sunsetDate = new Date(time);
+  let sunsetHours = sunsetDate.getHours();
+  let sunsetMinutes = sunsetDate.getMinutes();
+  if (sunsetMinutes < 10) {
+    sunsetMinutes = `0${sunsetMinutes}`;
+  }
+  return `${sunsetHours}:${sunsetMinutes}`;
+}
+
+// fetch city that was updated in the search engine and update elements using the open weather API
 
 function displayCity(event) {
   event.preventDefault();
@@ -62,25 +87,6 @@ function showTemp(response) {
 
   // sunrise and sunset times (check if you add to separate function)
 
-  let sunriseDate = new Date(response.data.sys.sunrise * 1000);
-  let sunriseHours = sunriseDate.getHours();
-  if (sunriseHours < 10) {
-    sunriseHours = `0${sunriseHours}`;
-  }
-  let sunriseMinutes = sunriseDate.getMinutes();
-  if (sunriseMinutes < 10) {
-    sunriseMinutes = `0${sunriseMinutes}`;
-  }
-  let sunriseTime = `${sunriseHours}:${sunriseMinutes}`;
-
-  let sunsetDate = new Date(response.data.sys.sunset * 1000);
-  let sunsetHours = sunsetDate.getHours();
-  let sunsetMinutes = sunsetDate.getMinutes();
-  if (sunsetMinutes < 10) {
-    sunsetMinutes = `0${sunsetMinutes}`;
-  }
-  let sunsetTime = `${sunsetHours}:${sunsetMinutes}`;
-
   let displayTempNow = document.querySelector("#currentTemperature");
   displayTempNow.innerHTML = tempNow;
 
@@ -106,10 +112,10 @@ function showTemp(response) {
   date.innerHTML = formatDate(response.data.dt * 1000);
 
   let displaySunrise = document.querySelector("#sunrise");
-  displaySunrise.innerHTML = sunriseTime;
+  displaySunrise.innerHTML = showSunrise(response.data.sys.sunrise * 1000);
 
   let displaySunset = document.querySelector("#sunset");
-  displaySunset.innerHTML = sunsetTime;
+  displaySunset.innerHTML = showSunset(response.data.sys.sunset * 1000);
 
   //update the icon on the weather app based on current weather
   let weatherCode = response.data.weather[0].icon;
