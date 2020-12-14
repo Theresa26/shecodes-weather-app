@@ -60,7 +60,7 @@ function showTemp(response) {
   let windSpeed = response.data.wind.speed;
   let humidity = response.data.main.humidity;
 
-  // sunrise and sunset times
+  // sunrise and sunset times (check if you add to separate function)
 
   let sunriseDate = new Date(response.data.sys.sunrise * 1000);
   let sunriseHours = sunriseDate.getHours();
@@ -110,6 +110,15 @@ function showTemp(response) {
 
   let displaySunset = document.querySelector("#sunset");
   displaySunset.innerHTML = sunsetTime;
+
+  //update the icon on the weather app based on current weather
+  let weatherCode = response.data.weather[0].icon;
+  let icon = document.querySelector("#icon");
+  icon.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${weatherCode}@2x.png`
+  );
+  icon.setAttribute("alt", response.data.weather[0].description);
 }
 
 // functionality of the current button using geolocation
