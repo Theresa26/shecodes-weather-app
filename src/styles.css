@@ -42,6 +42,16 @@ label,
   text-align: center;
 }
 
+.active {
+  cursor: default;
+  color: black;
+}
+
+.active:hover {
+  text-decoration: none;
+  color: black;
+}
+
 .btn {
   font-size: 15px;
 }

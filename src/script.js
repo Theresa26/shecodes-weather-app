@@ -71,15 +71,10 @@ function displayCity(event) {
   search(document.getElementById("searchCity").value);
 }
 
-let form = document.querySelector("form");
-form.addEventListener("submit", displayCity);
-
-search("London");
-
 // pull the acutal weather for the location that is being entered
 
 function showTemp(response) {
-  let tempNow = Math.round(response.data.main.temp);
+  celsiusTemp = Math.round(response.data.main.temp);
   let tempMin = Math.round(response.data.main.temp_min);
   let tempMax = Math.round(response.data.main.temp_max);
   let feelsLike = Math.round(response.data.main.feels_like);
@@ -91,33 +86,25 @@ function showTemp(response) {
   // sunrise and sunset times (check if you add to separate function)
 
   let displayTempNow = document.querySelector("#currentTemperature");
-  displayTempNow.innerHTML = tempNow;
-
   let displayTempMin = document.querySelector("#min");
-  displayTempMin.innerHTML = tempMin;
-
   let displayTempMax = document.querySelector("#max");
-  displayTempMax.innerHTML = tempMax;
-
   let displayFeelsLike = document.querySelector("#feels-like");
-  displayFeelsLike.innerHTML = feelsLike;
-
   let displayHumidity = document.querySelector("#humidity");
-  displayHumidity.innerHTML = humidity;
-
   let displayWindSpeed = document.querySelector("#speed");
-  displayWindSpeed.innerHTML = Math.round(windSpeed);
-
   let displayDescription = document.querySelector("#description");
-  displayDescription.innerHTML = weatherDes;
-
   let date = document.querySelector("#day-time");
-  date.innerHTML = formatDate(response.data.dt * 1000);
-
   let displaySunrise = document.querySelector("#sunrise");
-  displaySunrise.innerHTML = showSunrise(response.data.sys.sunrise * 1000);
-
   let displaySunset = document.querySelector("#sunset");
+
+  displayTempNow.innerHTML = celsiusTemp;
+  displayTempMin.innerHTML = tempMin;
+  displayTempMax.innerHTML = tempMax;
+  displayFeelsLike.innerHTML = feelsLike;
+  displayHumidity.innerHTML = humidity;
+  displayWindSpeed.innerHTML = Math.round(windSpeed);
+  displayDescription.innerHTML = weatherDes;
+  date.innerHTML = formatDate(response.data.dt * 1000);
+  displaySunrise.innerHTML = showSunrise(response.data.sys.sunrise * 1000);
   displaySunset.innerHTML = showSunset(response.data.sys.sunset * 1000);
 
   //update the icon and alternative description on the weather app based on current weather
@@ -125,7 +112,7 @@ function showTemp(response) {
   let icon = document.querySelector("#icon");
   icon.setAttribute(
     "src",
-    `http://openweathermap.org/img/wn/${weatherCode}@2x.png`
+    `https://openweathermap.org/img/wn/${weatherCode}@2x.png`
   );
   icon.setAttribute("alt", response.data.weather[0].description);
 }
@@ -134,7 +121,6 @@ function showTemp(response) {
 
 function updateCityGeo(input) {
   let geoLocation = input.data.name;
-  console.log(geoLocation);
   let defaultCity = document.querySelectorAll(".default");
   var i;
   for (i = 0; i < defaultCity.length; i++) {
@@ -157,5 +143,41 @@ function useLocation(event) {
   navigator.geolocation.getCurrentPosition(obtainPosition);
 }
 
+// fahrenheit conversion function
+function displayFahrenheit(event) {
+  event.preventDefault();
+  let displayFahrenheit = (celsiusTemp * 9) / 5 + 32;
+  let currentDisplayTemp = document.querySelector("#currentTemperature");
+  currentDisplayTemp.innerHTML = Math.round(displayFahrenheit);
+
+  document.querySelector("#celsius").classList.remove("active");
+  document.querySelector("#fahrenheit").classList.add("active");
+}
+
+// conversion back to celsius
+function displayCelsius(event) {
+  event.preventDefault();
+  let currentDisplayTemp = document.querySelector("#currentTemperature");
+  currentDisplayTemp.innerHTML = celsiusTemp;
+
+  document.querySelector("#celsius").classList.add("active");
+  document.querySelector("#fahrenheit").classList.remove("active");
+}
+
+let form = document.querySelector("form");
+form.addEventListener("submit", displayCity);
+
+search("London");
+
+//use current location to fetch weather
 let locationButton = document.querySelector(".btn-success");
 locationButton.addEventListener("click", useLocation);
+
+//fahrenheit conversion
+let fahrenheitTemp = document.querySelector("#fahrenheit");
+fahrenheitTemp.addEventListener("click", displayFahrenheit);
+
+let celsiusTempConversion = document.querySelector("#celsius");
+celsiusTempConversion.addEventListener("click", displayCelsius);
+
+let celsiusTemp = null;
