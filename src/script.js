@@ -61,18 +61,10 @@ function search(city) {
 
 function displayCity(event) {
   event.preventDefault();
-  let searchCity = document.querySelector("#searchCity");
-  let defaultCity = document.querySelectorAll(".default");
-  var i;
-  for (i = 0; i < defaultCity.length; i++) {
-    defaultCity[i].innerHTML = searchCity.value;
-  }
-
   search(document.getElementById("searchCity").value);
 }
 
 // pull the acutal weather for the location that is being entered
-
 function showTemp(response) {
   celsiusTemp = Math.round(response.data.main.temp);
   let tempMin = Math.round(response.data.main.temp_min);
@@ -107,6 +99,13 @@ function showTemp(response) {
   displaySunrise.innerHTML = showSunrise(response.data.sys.sunrise * 1000);
   displaySunset.innerHTML = showSunset(response.data.sys.sunset * 1000);
 
+  // update city name
+  let updateCity = document.querySelectorAll(".default");
+  var i;
+  for (i = 0; i < updateCity.length; i++) {
+    updateCity[i].innerHTML = response.data.name;
+  }
+
   //update the icon and alternative description on the weather app based on current weather
   let weatherCode = response.data.weather[0].icon;
   let icon = document.querySelector("#icon");
@@ -118,16 +117,6 @@ function showTemp(response) {
 }
 
 // functionality of the current button using geolocation
-
-function updateCityGeo(input) {
-  let geoLocation = input.data.name;
-  let defaultCity = document.querySelectorAll(".default");
-  var i;
-  for (i = 0; i < defaultCity.length; i++) {
-    defaultCity[i].innerHTML = geoLocation;
-  }
-}
-
 function obtainPosition(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
@@ -136,7 +125,6 @@ function obtainPosition(position) {
 
   // now get weather of the geolocation
   axios.get(`${apiUrlGeo}&appid=${apiKey}`).then(showTemp);
-  axios.get(`${apiUrlGeo}&appid=${apiKey}`).then(updateCityGeo);
 }
 
 function useLocation(event) {
