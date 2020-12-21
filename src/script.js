@@ -1,14 +1,20 @@
-// update the last updated time on weather app
+// format time stamps on page
+function formatTime(time) {
+  let formatTimeDate = new Date(time);
+  let formatTimeHours = formatTimeDate.getHours();
+  if (formatTimeHours < 10) {
+    formatTimeHours = `0${formatTimeHours}`;
+  }
+  let formatTimeMinutes = formatTimeDate.getMinutes();
+  if (formatTimeMinutes < 10) {
+    formatTimeMinutes = `0${formatTimeMinutes}`;
+  }
+  return `${formatTimeHours}:${formatTimeMinutes}`;
+}
+
+// update the last updated time on weather app with weekday and time
 function formatDate(timestamp) {
   let date = new Date(timestamp);
-  let hours = date.getHours();
-  if (hours < 10) {
-    hours = `0${hours}`;
-  }
-  let minutes = date.getMinutes();
-  if (minutes < 10) {
-    minutes = `0${minutes}`;
-  }
 
   let weekdays = [
     "Sunday",
@@ -22,32 +28,8 @@ function formatDate(timestamp) {
   ];
 
   let actualDay = weekdays[date.getDay()];
-  return `${actualDay} ${hours}:${minutes}`;
-}
-
-// update the sunrise time
-function showSunrise(time) {
-  let sunriseDate = new Date(time);
-  let sunriseHours = sunriseDate.getHours();
-  if (sunriseHours < 10) {
-    sunriseHours = `0${sunriseHours}`;
-  }
-  let sunriseMinutes = sunriseDate.getMinutes();
-  if (sunriseMinutes < 10) {
-    sunriseMinutes = `0${sunriseMinutes}`;
-  }
-  return `${sunriseHours}:${sunriseMinutes}`;
-}
-
-// update the sunset time
-function showSunset(time) {
-  let sunsetDate = new Date(time);
-  let sunsetHours = sunsetDate.getHours();
-  let sunsetMinutes = sunsetDate.getMinutes();
-  if (sunsetMinutes < 10) {
-    sunsetMinutes = `0${sunsetMinutes}`;
-  }
-  return `${sunsetHours}:${sunsetMinutes}`;
+  let timeToShow = formatTime(timestamp);
+  return `${actualDay} ${timeToShow}`;
 }
 
 // pull the acutal weather for the location that is being entered
@@ -56,13 +38,9 @@ function showTemp(response) {
   let tempMin = Math.round(response.data.main.temp_min);
   let tempMax = Math.round(response.data.main.temp_max);
   let feelsLike = Math.round(response.data.main.feels_like);
-
   let weatherDes = response.data.weather[0].description;
   let windSpeed = response.data.wind.speed;
   let humidity = response.data.main.humidity;
-
-  // sunrise and sunset times (check if you add to separate function)
-
   let displayTempNow = document.querySelector("#currentTemperature");
   let displayTempMin = document.querySelector("#min");
   let displayTempMax = document.querySelector("#max");
@@ -82,10 +60,10 @@ function showTemp(response) {
   displayWindSpeed.innerHTML = Math.round(windSpeed);
   displayDescription.innerHTML = weatherDes;
   date.innerHTML = formatDate(response.data.dt * 1000);
-  displaySunrise.innerHTML = showSunrise(response.data.sys.sunrise * 1000);
-  displaySunset.innerHTML = showSunset(response.data.sys.sunset * 1000);
+  displaySunrise.innerHTML = formatTime(response.data.sys.sunrise * 1000);
+  displaySunset.innerHTML = formatTime(response.data.sys.sunset * 1000);
 
-  // update city name
+  // update city name on page
   let updateCity = document.querySelectorAll(".default");
   var i;
   for (i = 0; i < updateCity.length; i++) {
@@ -109,7 +87,7 @@ function showForecast(response) {
 
   for (i = 0; i < 5; i++) {
     let forecast = response.data.list[i];
-    let forecastTime = showSunrise(response.data.list[i].dt * 1000);
+    let forecastTime = formatTime(response.data.list[i].dt * 1000);
     let forecastMin = forecast.main.temp_min;
     let forecastMax = forecast.main.temp_max;
     let forecastIcon = forecast.weather[0].icon;
@@ -127,7 +105,6 @@ function showForecast(response) {
 }
 
 // fetch city that was updated in the search engine and update elements using the open weather API
-
 function search(city) {
   let apiKey = "095c860579f22b3bd8962f914fb1341a";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
@@ -193,6 +170,7 @@ locationButton.addEventListener("click", useLocation);
 let fahrenheitTemp = document.querySelector("#fahrenheit");
 fahrenheitTemp.addEventListener("click", displayFahrenheit);
 
+//conversion back to celsius
 let celsiusTempConversion = document.querySelector("#celsius");
 celsiusTempConversion.addEventListener("click", displayCelsius);
 
