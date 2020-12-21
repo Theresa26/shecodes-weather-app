@@ -21,7 +21,8 @@ h1 {
 h1,
 h2,
 .card-title,
-.day {
+.day,
+.default {
   font-family: Amatic SC, cursive;
 }
 
@@ -31,8 +32,26 @@ h2 {
   text-align: center;
 }
 
-div.row {
+div.card-deck {
+  margin-bottom: 30px;
+}
+
+div.col-md-6,
+div.col-6.current-temperature {
   margin: 0px;
+  padding: 0px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+div.col-sm-4.day {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+}
+
+img {
+  text-align: center;
 }
 
 img.header-image {
@@ -41,7 +60,6 @@ img.header-image {
 }
 
 label,
-.col-6,
 .btn {
   font-family: "Roboto", cursive;
   font-size: 25px;
@@ -66,6 +84,7 @@ label,
 .card {
   margin: 30px 10px;
   background-color: #fff;
+  display: inline-block;
 }
 
 .card-title {
@@ -74,14 +93,11 @@ label,
   padding: 25px;
 }
 
-.col-4 {
-  line-height: 2;
-}
-
 .current-temperature {
-  font-size: 60px;
-  font-weight: 500px;
+  font-size: 80px;
   margin-left: 0;
+  font-weight: 500;
+  text-align: center;
 }
 
 .day {
@@ -90,35 +106,40 @@ label,
 
 .default {
   text-transform: capitalize;
+  font-weight: 500;
+  font-size: 40px;
 }
 
 .icon {
-  font-size: 150px;
-  padding-left: 40px;
+  width: 150px;
+  height: auto;
+  display: block;
+  text-align: center;
 }
-
-.logo {
-  font-size: 40px;
+.main {
+  width: 200px;
+  height: auto;
+  padding-left: 40px;
 }
 
 .search {
   width: 100%;
 }
 
-.sunrise {
-  font-size: 12px;
-}
-
 .temp {
   font-family: monospace;
   font-size: 25px;
   font-weight: lighter;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
 }
 
 .temp-measure {
   position: relative;
   font-size: 18px;
-  top: -30px;
+  top: -45px;
+  left: -20px;
 }
 
 .temp-measure:hover {

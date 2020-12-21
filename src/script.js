@@ -94,10 +94,10 @@ function showForecast(response) {
 
     insertForecast.innerHTML += `<div class="row">
       <div class="col-sm-4 day"> ${forecastTime}</div>
-      <div class="col-sm-4 logo">
+      <div class="col-sm-3 logo">
         <img src=" https://openweathermap.org/img/wn/${forecastIcon}@2x.png" />
       </div>
-  <div class="col-sm-4 temp">${Math.round(forecastMin)}°C / ${Math.round(
+  <div class="col-sm-5 temp">${Math.round(forecastMin)}°C / ${Math.round(
       forecastMax
     )}°C</div>
     </div>`;
